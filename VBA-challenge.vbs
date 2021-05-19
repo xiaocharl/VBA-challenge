@@ -2,7 +2,7 @@ Sub vbachallenge()
 Dim ws As Worksheet
 Set ws = ActiveSheet
 
-
+'define variables
 Dim i, j As Integer
 
 Dim ticker As String
@@ -14,24 +14,26 @@ Dim yearlychange As Double
 Dim percent As Double
 
 
-'For Each ws In Worksheets
+For Each ws In Worksheets
 
 
-
+'create table
 ws.Cells(1, 9).Value = "Ticker "
 ws.Cells(1, 10).Value = "Yearly Change"
 ws.Cells(1, 11).Value = "Percent Change"
 ws.Cells(1, 12).Value = "Total Stock Volume"
-
+'lastrow value
 lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+'initial value
 j = 2
 vol = 0
 openprice = ws.Cells(2, 3).Value
+
+
+
 For i = 2 To lastrow
-On Error Resume Next
-
-
-
+'style
 ws.Cells(i, 11).Style = "percent"
 
 If ws.Cells(i + 1, 1).Value = ws.Cells(i, 1).Value Then
@@ -43,7 +45,6 @@ ws.Cells(j, 12).Value = vol
 ws.Cells(j, 9).Value = ticker
 closeprice = ws.Cells(i, 6).Value
 yearlychange = closeprice - openprice
-
   percent = yearlychange / (openprice + 0.00000001)
   ws.Cells(j, 10).Value = yearlychange
 ws.Cells(j, 11).Value = percent
@@ -53,6 +54,9 @@ openprice = ws.Cells(i + 1, 3).Value
 j = j + 1
 
 End If
+
+
+'color index
 If ws.Cells(j - 1, 11).Value >= 0 Then
 ws.Cells(j - 1, 11).Interior.ColorIndex = 4
  Else: ws.Cells(j - 1, 11).Interior.ColorIndex = 3
@@ -64,7 +68,7 @@ End If
 Next i
 
 
-
+'find larger number
 ws.Cells(2, 15).Value = "Greatest% Increase"
 ws.Cells(3, 15).Value = "Greatest% Decrease"
 ws.Cells(4, 15).Value = "Greatest Total Volume"
@@ -116,5 +120,5 @@ ws.Cells(4, 16).Value = tickervol
 ws.Cells(4, 17).Value = gv
 ws.Cells(2, 17).Style = "percent"
 ws.Cells(3, 17).Style = "percent"
-'Next ws
+Next ws
 End Sub
