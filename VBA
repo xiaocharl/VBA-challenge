@@ -14,7 +14,7 @@ Dim yearlychange As Double
 Dim percent As Double
 
 
-For Each ws In Worksheets
+'For Each ws In Worksheets
 
 
 
@@ -28,6 +28,9 @@ j = 2
 vol = 0
 openprice = ws.Cells(2, 3).Value
 For i = 2 To lastrow
+On Error Resume Next
+
+
 
 ws.Cells(i, 11).Style = "percent"
 
@@ -41,7 +44,7 @@ ws.Cells(j, 9).Value = ticker
 closeprice = ws.Cells(i, 6).Value
 yearlychange = closeprice - openprice
 
-  percent = yearlychange / openprice
+  percent = yearlychange / (openprice + 0.00000001)
   ws.Cells(j, 10).Value = yearlychange
 ws.Cells(j, 11).Value = percent
 
@@ -113,5 +116,5 @@ ws.Cells(4, 16).Value = tickervol
 ws.Cells(4, 17).Value = gv
 ws.Cells(2, 17).Style = "percent"
 ws.Cells(3, 17).Style = "percent"
-Next ws
+'Next ws
 End Sub
